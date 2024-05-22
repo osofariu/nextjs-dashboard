@@ -6,16 +6,15 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
  
 const FormSchema = z.object({
-  id: z.string(),
   customerId: z.string(),
   amount: z.coerce.number(),
-  status: z.enum(['pending', 'paid']),
-  date: z.string(),
+  status: z.enum(['pending', 'paid'])
 });
  
-const CreateInvoice = FormSchema.omit({ id: true, date: true });
+const CreateInvoice = FormSchema.omit({ });
 
 export async function createInvoice(formData: FormData) {
+    console.log(`Form data ${formData}`)
     const { customerId, amount, status } = CreateInvoice.parse({
         customerId: formData.get('customerId'),
         amount: formData.get('amount'),
